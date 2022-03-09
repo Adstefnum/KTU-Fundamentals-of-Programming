@@ -1,9 +1,10 @@
 #pragma once
+#include <string>
 
 class Coin {
 
     public:
-	double denomination;
+    std::string denomination;
 	double weight;
 	double diameter;
 	double thickness;
