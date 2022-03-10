@@ -2,7 +2,9 @@
 #include "coin.h"
 #include "cylinder.h"
 #include <cmath>
+#include <algorithm>
 #include <fstream>
+#include <stdio.h>
 #include <sstream>
 #include <iostream>
 #include <string>
@@ -50,6 +52,9 @@ ifstream fd(file);
 fd >> nc; fd.ignore();
 for (int i=0; i<nc; i++){
         getline(fd,coins[i].denomination,','); fd >> ws;
+        coins[i].denomination.erase(
+    std::remove(coins[i].denomination.begin(), coins[i].denomination.end(), '\"'),
+    coins[i].denomination.end());
         fd >> coins[i].weight;
         fd >> coins[i].diameter;
         fd >> coins[i].thickness;
@@ -80,23 +85,17 @@ double calcCyVolume(double diameter, double height){
 
 void ValueOfCoins(Coin coins[],int nc){
         double coin_sum;
-        std::map<std::string, int> coin_values = {
-               {"One",1},
-               {"Two",2},
-               {"Five",5},
-               {"Ten", 10},
-               {"Twenty", 20},
-               {"Fifty", 50}, 
-               {"Hundred",100},
-       
-       };
+        int c;
+    
             for(int i=0; i<nc; i++){
-            coin_sum += coin_values[coins[i].denomination];
-            coin_sum /= 100;
+         c = std::stoi(coins[i].denomination);
+         coin_sum += c;
 
             }
-        cout << "The total value of the coins are: " << setprecision(2) << coin_sum << " Euros" <<endl;
+            coin_sum /= 100;
+        cout << "The total value of the coins are: " << setprecision(3)<< coin_sum << " Euros" <<endl;
 }
+
 //void  NoOfCoinsInCylinder(Coin coins[],int nc, Cylinder _Cylinder){
 // 
 //   double vol_of_cyl = calcCyVolume(_Cylinder.diameter, _Cylinder.length);
