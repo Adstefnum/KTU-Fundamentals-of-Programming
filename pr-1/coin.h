@@ -8,4 +8,5 @@ class Coin {
 	double weight;
 	double diameter;
 	double thickness;
+    double no_of_coins;
 };

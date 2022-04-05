@@ -1,0 +1,12 @@
+Number of books: 5
+Name of Student: Schonberger Jillian
+List of Books: 
+---------------------------------------------
+|    Author   |   No of Pages  |   Price    | 
+---------------------------------------------
+|   Stephen Hawking |   79      |   123.0  |   
+|   Marcus Brown    |   210     |   120.0  |   
+|   Arome Osayi     |   150     |   50.0   |   
+|   Musa Munroe     |   180     |   180.0  |   
+|   Wole Genius     |   50      |   150.0  |   
+---------------------------------------------

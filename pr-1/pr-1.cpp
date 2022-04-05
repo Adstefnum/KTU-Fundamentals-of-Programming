@@ -15,9 +15,9 @@
 //prototype of functions so the functions can stay below the main but still run
 
 void ReadData(std::string file, Coin coins[], int &nc);
-void WriteData(std::string file, Coin coins[], int nc);
+void WriteData(std::string file, Coin coins[], int nc, double value_of_coins);
 void  NoOfCoinsInCylinder(Coin coins[], int nc, Cylinder _Cylinder);
-void ValueOfCoins(Coin coins[], int nc);
+double ValueOfCoins(Coin coins[], int nc);
 double calcCyVolume(double diameter, double height);
 
 int main()
@@ -26,6 +26,7 @@ int number_of_coins;
 	Coin coins[10];
     Cylinder _Cylinder;
     int nc;
+    double value_of_coins;
     
     std::cout << "Enter the diameter then height of the cylinder:" ;
    std::cin >> _Cylinder.diameter >> _Cylinder.length;
@@ -37,9 +38,9 @@ int number_of_coins;
     fd.close();
 
     ReadData("Data.txt", coins, nc);
-    ValueOfCoins(coins, nc);
+    value_of_coins = ValueOfCoins(coins, nc);
     NoOfCoinsInCylinder(coins,nc, _Cylinder);
-    WriteData("Result.txt", coins, nc);
+    WriteData("Result.txt", coins, nc, value_of_coins);
     std::cout << "Done" <<std::endl;
     std::cin.get();
 	return 0;
@@ -62,18 +63,19 @@ for (int i=0; i<nc; i++){
 fd.close();
 }
 
-void WriteData(std::string file, Coin coins[], int nc){
+void WriteData(std::string file, Coin coins[], int nc, double value_of_coins){
         std::ofstream ft(file, std::ios::app);
 ft.setf(std::ios::fixed); ft.setf(std::ios::left);
 ft << "Number of coins: " << nc << std::endl;
+ft << "Value of coins: " << value_of_coins << std::endl;
 ft << "List of Coins: \n";
-ft << "---------------------------------------------------------------\n";
-ft << "|    Denomination    |   Weight  |   Diameter    |   Thickness |\n";
-ft << "---------------------------------------------------------------\n";
+ft << "----------------------------------------------------------------------------------\n";
+ft << "|    Denomination    |   Weight  |   Diameter    |   Thickness | Number of coins |\n";
+ft << "----------------------------------------------------------------------------------\n";
         for (int i=0; i<nc; i++){
-ft << "|   " << std::setw(16) << coins[i].denomination << " |   " << std::setprecision(1) << std::setw(5) << coins[i].weight << "   |   " << std::setw(11) << coins[i].diameter << " |   " << std::setw(7) << coins[i].thickness << "  |" << std::endl;
+ft << "|   " << std::setw(16) << coins[i].denomination << " |   " << std::setprecision(1) << std::setw(5) << coins[i].weight << "   |   " << std::setw(11) << coins[i].diameter << " |   " << std::setw(7) << coins[i].thickness << "  |" << coins[i].no_of_coins << "  | " << std::endl;
         }
-ft << "---------------------------------------------------------------\n";
+ft << "------------------------------------------------------------------------------------\n";
         ft.close();
 }
 
@@ -82,7 +84,7 @@ double calcCyVolume(double diameter, double height){
  return M_PI * r* r* height;
 }
 
-void ValueOfCoins(Coin coins[],int nc){
+double ValueOfCoins(Coin coins[],int nc){
         double coin_sum;
         int c;
     
@@ -92,7 +94,9 @@ void ValueOfCoins(Coin coins[],int nc){
 
             }
             coin_sum /= 100;
+      
             std::cout << "The total value of the coins are: " << std::setprecision(3)<< coin_sum << " Euros" <<std::endl;
+            return coin_sum;
 }
 
 //void  NoOfCoinsInCylinder(Coin coins[],int nc, Cylinder _Cylinder){
@@ -102,6 +106,7 @@ void ValueOfCoins(Coin coins[],int nc){
 //    if (coins[i].diameter <= _Cylinder.diameter && coins[i].thickness <= _Cylinder.length){
 //   double vol_of_coin = calcCyVolume(coins[i].diameter, coins[i].thickness);
 //    int no_of_coins = (int)vol_of_cyl/vol_of_coin;
+//    coins[i].no_of_coins = no_of_coins;
 //   std::cout << "The cylinder can contain " << no_of_coins << " coins of denomination " << coins[i].denomination << std::endl; 
 //   }
 //   
@@ -118,6 +123,7 @@ void  NoOfCoinsInCylinder(Coin coins[],int nc, Cylinder _Cylinder){
    for (int i=0; i<nc; i++){
     if (coins[i].diameter <= _Cylinder.diameter && coins[i].thickness <= _Cylinder.length){
             int no_of_coins = (int)_Cylinder.length/coins[i].thickness;
+            coins[i].no_of_coins = no_of_coins;
             std::cout << "The cylinder can contain " << no_of_coins << " coins of denomination " << coins[i].denomination << std::endl; 
    }
    
