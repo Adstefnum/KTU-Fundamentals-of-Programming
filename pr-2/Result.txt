@@ -1,4 +1,17 @@
 Number of books: 5
+Name of Student: Stephen Adesina
+List of Books: 
+---------------------------------------------
+|    Author   |   No of Pages  |   Price    | 
+---------------------------------------------
+|   Stephen Hawking |   77      |   125.0  |   
+|   Dan Brown       |   250     |   100.0  |   
+|   Arome Osayi     |   150     |   50.0   |   
+|   Myles Munroe    |   200     |   50.0   |   
+|   Wole Soyinka    |   150     |   100.0  |   
+---------------------------------------------
+
+Number of books: 5
 Name of Student: Schonberger Jillian
 List of Books: 
 ---------------------------------------------
@@ -10,3 +23,32 @@ List of Books:
 |   Musa Munroe     |   180     |   180.0  |   
 |   Wole Genius     |   50      |   150.0  |   
 ---------------------------------------------
+
+
+ More than one book has the same cheapest price. The authors are: Arome Osayi ,Myles Munroe, and each costs 50.000000
+
+The sum of all prices for books borrowed by Stephen Adesina is 425
+
+The cheapest book borrowed by Schonberger Jillian was written by Arome Osayi and costs 50.000000
+
+The sum of all prices for books borrowed by Schonberger Jillian is 623
+
+Both students borrowed a book that was of the same price which was the cheapest 
+Student 1: 
+ Name: Stephen Adesina
+Author: Arome Osayi ,Myles Munroe, 
+ Cost: 50.000000
+Student 2: 
+ Name: Stephen Adesina
+Author: Arome Osayi
+ Cost: 50.000000
+
+Both students borrowed a book that was of the same price which was the cheapest 
+Student 1: 
+ Name: Stephen Adesina
+Author: Arome Osayi ,Myles Munroe, 
+ Cost: 50.000000
+Student 2: 
+ Name: Stephen Adesina
+Author: Arome Osayi
+ Cost: 50.000000

@@ -1,4 +1,5 @@
 rm ./pr-2
+clear
 make
 ./pr-2
 bat Result.txt
