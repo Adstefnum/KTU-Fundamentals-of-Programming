@@ -43,12 +43,11 @@ Student 2:
 Author: Arome Osayi
  Cost: 50.000000
 
-Both students borrowed a book that was of the same price which was the cheapest 
-Student 1: 
- Name: Stephen Adesina
-Author: Arome Osayi ,Myles Munroe, 
- Cost: 50.000000
-Student 2: 
- Name: Stephen Adesina
-Author: Arome Osayi
- Cost: 50.000000
+List of Books with pages less than the cheapest book: 
+---------------------------------------------
+|    Author   |   No of Pages  |   Price    | 
+---------------------------------------------
+|   Stephen Hawking |   79      |   123.0  |   
+|   Wole Genius     |   50      |   150.0  |   
+---------------------------------------------
+

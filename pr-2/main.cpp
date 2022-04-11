@@ -6,6 +6,8 @@
 #include "book.h"
 #include <fstream>
 #include <stdio.h>
+#include <algorithm>
+
 
 struct CheapReturn{
         std::string author;
@@ -19,7 +21,7 @@ void WriteMainData(std::string file, std::string student_name,Book books[], int 
 void WriteCalcData(std::string file, std::string result); 
 CheapReturn CheapestBook(Book books[], std::string student_name,int nc,bool write);
 void SumAllBooks(Book books[], std::string student_name,int nc);
-CheapReturn CheapestRent(Book books[],Book books_1[],std::string student_name, std::string student_name_1,int nc, int nc_1);
+CheapReturn CheapestRent(Book books[],Book books_1[],std::string student_name, std::string student_name_1,int nc, int nc_1,bool write);
 void PagesLessThanCheapest(Book books[], Book books_1[],Book ReturnBook[], std::string student_name, std::string student_name_1,int nc, int nc_1);
 
 int main(){
@@ -45,7 +47,7 @@ int main(){
         SumAllBooks(books_1, student_name_1,nc_1);
 
        //Cheapest book rented
-     CheapestRent(books,books_1,student_name,student_name_1,nc,nc_1);
+     CheapestRent(books,books_1,student_name,student_name_1,nc,nc_1,true);
 
      //Create Collection of books with less pages that the cheapest book
     PagesLessThanCheapest(books, books_1,ReturnBook,student_name,student_name_1,nc,nc_1);
@@ -53,11 +55,10 @@ int main(){
 }
 
 void PagesLessThanCheapest(Book books[], Book books_1[], Book ReturnBook[], std::string student_name, std::string student_name_1,int nc,int nc_1){
-int pages_cheap = CheapestRent(books,books_1,student_name,student_name_1,nc,nc_1).no_of_pages;
+int pages_cheap = CheapestRent(books,books_1,student_name,student_name_1,nc,nc_1,false).no_of_pages;
 std::string author;
-int no_of_pages,final_count;
-int count=0;
-int count_1=0;
+int no_of_pages;
+int count=-1;
 double price;
 for(int i=0;i<nc;i++){
 
@@ -76,15 +77,14 @@ for(int i=0;i<nc_1;i++){
 
         if(books_1[i].getNoPages()<pages_cheap){
             author = books_1[i].getAuthor();
-            ReturnBook[count-i].setAuthor(author);
+            ReturnBook[count].setAuthor(author);
             price = books_1[i].getPrice();
-            ReturnBook[count-i].setPrice(price);
+            ReturnBook[count].setPrice(price);
             no_of_pages = books_1[i].getNoPages();
-            ReturnBook[count-i].setNoPages(no_of_pages);
-            count_1 += 1;
+            ReturnBook[count].setNoPages(no_of_pages);
+            count += 1;
         }
 }
-final_count = count + count_1;
     std::ofstream fd("Result.txt",std::ios::app);
     fd.setf(std::ios::fixed); fd.setf(std::ios::left); 
 
@@ -92,7 +92,7 @@ fd << "\nList of Books with pages less than the cheapest book: \n";
 fd << "---------------------------------------------\n";
 fd << "|    Author   |   No of Pages  |   Price    | \n";
 fd << "---------------------------------------------\n";
-        for (int i=0; i<final_count; i++){
+        for (int i=0; i<count; i++){
 fd << "|   " << std::setw(15) << ReturnBook[i].getAuthor() << " |   " << std::setprecision(1) << std::setw(5) << ReturnBook[i].getNoPages() << "   |   "  <<std::setw(6)<< ReturnBook[i].getPrice() << " |   "  << std::endl;
         }
 fd << "---------------------------------------------\n"<<std::endl;
@@ -100,25 +100,25 @@ fd << "---------------------------------------------\n"<<std::endl;
     }
 
 
-CheapReturn CheapestRent(Book books[],Book books_1[],std::string student_name, std::string student_name_1,int nc, int nc_1){
+CheapReturn CheapestRent(Book books[],Book books_1[],std::string student_name, std::string student_name_1,int nc, int nc_1, bool write){
     double cheapest = 0.0;std::string result;
     CheapReturn cheap_1 = CheapestBook(books,student_name,nc,false);
     CheapReturn cheap_2 = CheapestBook(books_1,student_name_1,nc_1,false);
  if (cheap_1.cheapest<cheap_2.cheapest){
         cheapest = cheap_1.cheapest;
   result = "\nThe cheapest was book borrowed by " + student_name+" written by " + cheap_1.author + " and costs " + std::to_string(cheapest) +"\n";
-    WriteCalcData("Result.txt",result);
+   if (write){WriteCalcData("Result.txt",result);}
   return{"",0.0,cheap_1.no_of_pages};
  }
  else if(cheap_1.cheapest==cheap_2.cheapest){   
  result = "\nBoth students borrowed a book that was of the same price which was the cheapest \nStudent 1: \n Name: " + student_name+ "\nAuthor: " + cheap_1.author + "\n Cost: "+std::to_string(cheap_1.cheapest) +"\nStudent 2: \n Name: " + student_name+ "\nAuthor: " + cheap_2.author + "\n Cost: "+std::to_string(cheap_2.cheapest) + "\n";
-    WriteCalcData("Result.txt",result);
-  return{"",0.0,cheap_1.no_of_pages};
+   if (write){WriteCalcData("Result.txt",result);}
+  return{"",0.0,std::min(cheap_1.no_of_pages,cheap_2.no_of_pages)};
  }
  else{
  cheapest = cheap_2.cheapest;
- result = "\nThe cheapest book was borrowed by " + student_name+" written by " + cheap_2.author + " and costs " + std::to_string(cheapest) +"\n";
-    WriteCalcData("Result.txt",result);
+ result = "\nThe cheapest book was borrowed by " + student_name_1+" written by " + cheap_2.author + " and costs " + std::to_string(cheapest) +"\n";
+   if (write){WriteCalcData("Result.txt",result);}
   return{"",0.0,cheap_2.no_of_pages};
 }
     return {"",0.0,0};
