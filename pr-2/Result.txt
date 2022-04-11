@@ -1,3 +1,4 @@
+
 Number of books: 5
 Name of Student: Stephen Adesina
 List of Books: 
@@ -10,6 +11,7 @@ List of Books:
 |   Myles Munroe    |   200     |   50.0   |   
 |   Wole Soyinka    |   150     |   100.0  |   
 ---------------------------------------------
+
 
 Number of books: 5
 Name of Student: Schonberger Jillian
@@ -43,10 +45,12 @@ Student 2:
 Author: Arome Osayi
  Cost: 50.000000
 
-List of Books with pages less than the cheapest book: 
+Number of books: 3
+List of Books: 
 ---------------------------------------------
 |    Author   |   No of Pages  |   Price    | 
 ---------------------------------------------
+|   Stephen Hawking |   77      |   125.0  |   
 |   Stephen Hawking |   79      |   123.0  |   
 |   Wole Genius     |   50      |   150.0  |   
 ---------------------------------------------
