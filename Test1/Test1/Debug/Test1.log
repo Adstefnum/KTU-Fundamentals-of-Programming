@@ -1,0 +1,4 @@
+﻿  Test1.cpp
+d:\steade\fundamentals of programming\test1\test1\test1.cpp(65): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+d:\steade\fundamentals of programming\test1\test1\test1.cpp(76): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+  Test1.vcxproj -> D:\steade\Fundamentals of Programming\Test1\Debug\Test1.exe

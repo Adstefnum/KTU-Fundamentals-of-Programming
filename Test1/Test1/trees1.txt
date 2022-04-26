@@ -1,0 +1,6 @@
+5
+Fir 50
+Spruce 30
+Cypress 10
+Pine 40
+Osan 100
