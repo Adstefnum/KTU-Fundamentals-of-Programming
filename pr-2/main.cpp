@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <limits>
 #include <sstream>
 #include <iomanip>
@@ -8,14 +9,14 @@
 #include <stdio.h>
 #include <algorithm>
 
-
+//a struct used to return multiple values on a number of the functions.
 struct CheapReturn{
         std::string author;
         double cheapest;
         int no_of_pages;
 };
 
-
+//prototypes for the function defined beneath the main
 void ReadData(std::string file, std::string &student_name,Book books[], int &nc);
 void WriteMainData(std::string file, std::string student_name,Book books[], int nc,bool student);
 void WriteCalcData(std::string file, std::string result); 
@@ -27,15 +28,20 @@ int PageLessAux(int pages_cheap,int nc,int count,Book books[], Book ReturnBook[]
 
 
 int main(){
+    //state variables needed for various parts of the program
         const int arr_size =100;
         Book books[arr_size],books_1[arr_size];
         std::string file;
         int nc,nc_1; std::string student_name, student_name_1;
         
+        //empty result file before reading and writing
+        std::ofstream("Result.txt",std::ofstream::trunc);
+
+        //reading data
         ReadData("Data.txt",student_name,books,nc);
         ReadData("Data2.txt",student_name_1,books_1,nc_1);
         
-        std::ofstream("Result.txt",std::ofstream::trunc);
+        //write data
         WriteMainData("Result.txt",student_name,books,nc,true);
         WriteMainData("Result.txt",student_name_1,books_1,nc_1,true);
 
@@ -56,16 +62,22 @@ int main(){
         return 0;
 }
 
+//the main function calculate which books have a number of pages less than the cheapest  book
 void PagesLessThanCheapest(Book books[], Book books_1[], std::string student_name, std::string student_name_1,int nc,int nc_1){
     Book ReturnBook[nc+nc_1];
 int pages_cheap = CheapestRent(books,books_1,student_name,student_name_1,nc,nc_1,false).no_of_pages;
 //std::string author;
 int count_0 = PageLessAux(pages_cheap,nc,-1,books, ReturnBook);
 int count = PageLessAux(pages_cheap,nc_1,count_0,books_1, ReturnBook);
+    if (count>0){
         WriteMainData("Result.txt",student_name,ReturnBook,count+1,false);
     }
+    else{
+            WriteCalcData("Result.txt","The cheapest book has the least number of pages");
+    }
+}
 
-
+//a helper function calculate which books have a number of pages less than the cheapest book
 int PageLessAux(int pages_cheap,int nc,int count,Book books[], Book ReturnBook[]){
 
 std::string author;
@@ -86,6 +98,7 @@ for(int i=0;i<nc;i++){
 return count;
 }
 
+//function to calculate the cheapest book borrowed considering all books borrowd by all students
 CheapReturn CheapestRent(Book books[],Book books_1[],std::string student_name, std::string student_name_1,int nc, int nc_1, bool write){
     double cheapest = 0.0;std::string result;
     int no_of_pages; 
@@ -108,6 +121,7 @@ CheapReturn CheapestRent(Book books[],Book books_1[],std::string student_name, s
   return{"",0.0,no_of_pages};
 }
 
+//function that checks the cheapest book borrowed by an individual student
 CheapReturn CheapestBook(Book books[], std::string student_name,int nc, bool write){
         double cheapest = std::numeric_limits<double>::max();
         bool more=false;int no_of_pages;
@@ -142,6 +156,8 @@ CheapReturn CheapestBook(Book books[], std::string student_name,int nc, bool wri
 
 
 }
+
+//function to calculate the sum of all books borrowed by a student
 void SumAllBooks(Book books[], std::string student_name,int nc){
       int sum_ = 0;
       for(int i=0;i<nc;i++){
@@ -151,13 +167,15 @@ void SumAllBooks(Book books[], std::string student_name,int nc){
       WriteCalcData("Result.txt",result);
 }
 
+//function to write data calculated later that might have a different 
+//format from original data to be written
 void WriteCalcData(std::string file, std::string result){
         std::ofstream fd(file, std::ios::app);
         fd << std::setprecision(2)<<result;
         fd.close();
 }
 
-
+//function to read data from the file
 void ReadData(std::string file,std::string &student_name, Book books[], int &nc){
         std::ifstream fd(file);
         std::string first_name, last_name;int nop;double _price;
@@ -168,13 +186,15 @@ for (int i=0; i<nc; i++){
 
         fd>> first_name; fd>> last_name; fd >> std::ws; last_name.pop_back();
          books[i].setAuthor(first_name + " " + last_name);
-        fd >> nop; books[i].setNoPages(nop);
-        fd >> _price; books[i].setPrice(_price);
+        fd >> nop;if (nop>0) {books[i].setNoPages(nop);} else{WriteCalcData("Result.txt","Your number of pages is negative");std::exit(0);}
+        fd >> _price; if (_price>0) {books[i].setPrice(_price);} else{WriteCalcData("Result.txt","Your price cannot be negative");std::exit(0);}
         fd.ignore();
 }
 fd.close();
 }
 
+
+//function to write data to file
 void WriteMainData(std::string file, std::string student_name,Book books[], int nc,bool student){
         std::ofstream ft(file,std::ios::app);
 ft.setf(std::ios::fixed); ft.setf(std::ios::left);
