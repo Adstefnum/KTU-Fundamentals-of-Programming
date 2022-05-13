@@ -1,5 +1,6 @@
 #include "subscriber.h"
-
+#include <sstream>
+#include <iomanip>
 
 void Subscriber::Set(std::string _surname, std::string _address, std::string _newsPCode, int _noNewsPr, int _begPeriod, int _lenPeriod){
 
@@ -12,5 +13,9 @@ void Subscriber::Set(std::string _surname, std::string _address, std::string _ne
 }
 
 std::string Subscriber::Print(){
-    return "";
+
+    std::stringstream ret;
+    ret << std::left << std::setw(12) << surname << std::setw(10) << address << std::setw(8) <<
+        newsPCode<< std::setw(8) << begPeriod << std::setw(8) << lenPeriod << std::setw(8) << noNewsPr << std::right;
+    return ret.str();
 } 
