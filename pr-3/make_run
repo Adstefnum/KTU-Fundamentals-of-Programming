@@ -2,4 +2,4 @@ rm ./pr-3
 clear
 make
 ./pr-3
-cat Result.txt
+bat Result.txt

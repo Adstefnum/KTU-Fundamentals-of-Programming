@@ -15,7 +15,8 @@ void Subscriber::Set(std::string _surname, std::string _address, std::string _ne
 std::string Subscriber::Print(){
 
     std::stringstream ret;
-    ret << std::left << std::setw(12) << surname << std::setw(10) << address << std::setw(8) <<
+    ret << std::left << std::setw(10) << surname << std::setw(15) << address << std::setw(10) <<
         newsPCode<< std::setw(8) << begPeriod << std::setw(8) << lenPeriod << std::setw(8) << noNewsPr << std::right;
     return ret.str();
-} 
+}
+
