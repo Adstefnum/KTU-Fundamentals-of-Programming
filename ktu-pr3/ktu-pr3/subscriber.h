@@ -6,8 +6,15 @@ class Subscriber{
         std::string surname, address, newsPCode;
         int begPeriod, lenPeriod, noNewsPr;
 
-    public:
+	public:
        Subscriber():surname(""), address(""), newsPCode(""), begPeriod(0),lenPeriod(0), noNewsPr(0)  { }
        void Set(std::string _surname, std::string _address, std::string _newsPCode, int _noNewsPr, int _begPeriod, int _lenPeriod);
        std::string Print(); 
+	   std::string OrderedMoreThanOneMonth();
+	   bool operator < (const Subscriber & next) {
+		   return (address < next.address ||
+			   address == next.address && surname < next.surname);
+	   }
+
+	   int getnoNewsPr() { return noNewsPr; }
 };

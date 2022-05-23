@@ -1,7 +1,7 @@
 #pragma once
 #include "subscriber.h"
 
-class Company 
+class Company : Subscriber
 {
     public:
         static const int CMax = 100;
@@ -15,4 +15,6 @@ class Company
         int Get() { return n;}
         Subscriber Get(int i) { return Sb[i]; }
         void Set(const Subscriber & ob) { Sb[n++] = ob; }
+		int OrderedMost();
+		void Sort();
 };
