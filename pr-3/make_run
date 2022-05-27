@@ -1,5 +1,0 @@
-rm ./pr-3
-clear
-make
-./pr-3
-bat Result.txt
